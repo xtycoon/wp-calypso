@@ -99,10 +99,11 @@ module.exports = React.createClass( {
 	handleDomainVolumeSelection: function( event ) {
 		event.preventDefault();
 		let volume = parseInt( event.target.value );
-		upgradesActions.setVolume( {
-			cartItem: this.props.cartItem,
-			volume
-		} );
+		upgradesActions.setVolume( this.props.cartItem, volume );
+
+		cartItems.getDependentProducts( this.props.cartItem, this.props.cart )
+			.filter( product => cartItems.isPrivacyProduct( product ) )
+			.forEach( cartItem => upgradesActions.setVolume( cartItem, volume ) );
 	},
 
 	getVolumeOptions: function() {
@@ -111,8 +112,10 @@ module.exports = React.createClass( {
 
 	domainVolumeSelection: function() {
 		return isDomainRegistration( this.props.cartItem ) ? (
-			<select name="product-domain-volume" onChange={ this.handleDomainVolumeSelection }>
+			<select name="product-domain-volume"
 							className="product-domain-volume"
+							onChange={ this.handleDomainVolumeSelection }
+							value={ this.props.cartItem.volume }>
 				{ this.getVolumeOptions() }
 			</select>
 		) : null;
@@ -126,14 +129,14 @@ module.exports = React.createClass( {
 				<div className="primary-details">
 					<span className="product-name">{ name || this.translate( 'Loading…' ) }</span>
 					<span className="product-domain">{ this.getProductInfo() }</span>
-					{ this.domainVolumeSelection() }
 				</div>
 
 				<div className="secondary-details">
 					<span className="product-price">
 						{ this.price() }
 					</span>
-					{ this.removeButton() }
+					{ this.domainVolumeSelection() }
+					{ isCredits( cartItem ) ? null : this.removeButton() }
 				</div>
 			</li>
 		);
@@ -147,8 +150,9 @@ module.exports = React.createClass( {
 					volume: cartItem.volume,
 					productName: cartItem.product_name
 				}
-			};
-
+			},
+			hasDomainSuffix, gappsProductName;
+			
 		if ( isDomainRegistration( cartItem ) ) {
 			return cartItem.product_name;
 		}
@@ -157,10 +161,17 @@ module.exports = React.createClass( {
 		} else if ( cartItem.volume === 1 ) {
 			switch ( cartItem.product_slug ) {
 				case 'gapps':
+					hasDomainSuffix = cartItem.product_name.indexOf( cartItem.meta ) > -1;
+					gappsProductName = hasDomainSuffix ? cartItem.product_name : this.translate( '%(productName)s for %(domain)s', {
+						args: {
+							productName: cartItem.product_name,
+							domain: cartItem.meta
+						}
+					} );
 					return this.translate(
 						'%(productName)s (1 User)', {
 							args: {
-								productName: cartItem.product_name
+								productName: gappsProductName
 							}
 						} );
 
@@ -173,6 +184,13 @@ module.exports = React.createClass( {
 					return this.translate(
 						'%(productName)s (%(volume)s User)',
 						'%(productName)s (%(volume)s Users)',
+						options
+					);
+
+				case 'private_whois':
+					return this.translate(
+						'%(productName)s (%(volume)s Year)',
+						'%(productName)s (%(volume)s Years)',
 						options
 					);
 

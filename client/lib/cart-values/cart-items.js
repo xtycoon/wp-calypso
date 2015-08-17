@@ -319,12 +319,14 @@ function businessPlan( slug, properties ) {
  *
  * @param {Object} productSlug - the unique string that identifies the product
  * @param {string} domain - domain name
+ * @param {Number} volume
  * @returns {Object} the new item as `CartItemValue` object
  */
-function domainItem( productSlug, domain ) {
+function domainItem( productSlug, domain, volume = 1 ) {
 	return {
 		product_slug: productSlug,
-		meta: domain
+		meta: domain,
+		volume
 	};
 }
 
@@ -375,7 +377,7 @@ function siteRedirect( properties ) {
  * @returns {Object} the new item as `CartItemValue` object
  */
 function domainPrivacyProtection( properties ) {
-	return domainItem( 'private_whois', properties.domain );
+	return domainItem( 'private_whois', properties.domain, properties.volume );
 }
 
 /**
@@ -605,6 +607,10 @@ function getDomainRegistrationsWithoutPrivacy( cart ) {
 	} );
 }
 
+function isPrivacyProduct( cartItem ) {
+	return cartItem.product_slug === 'private_whois';
+}
+
 /**
  * Changes presence of a private registration for the given domain cart items.
  *
@@ -615,7 +621,7 @@ function getDomainRegistrationsWithoutPrivacy( cart ) {
  */
 function changePrivacyForDomains( cart, domainItems, changeFunction ) {
 	return flow.apply( null, domainItems.map( function( item ) {
-		return changeFunction( domainPrivacyProtection( { domain: item.meta } ) );
+		return changeFunction( domainPrivacyProtection( { domain: item.meta, volume: item.volume } ) );
 	} ) );
 }
 
@@ -675,6 +681,7 @@ module.exports = {
 	findFreeTrial: findFreeTrial,
 	getAll: getAll,
 	getAllSorted: getAllSorted,
+	getDependentProducts: getDependentProducts,
 	getDomainMappings: getDomainMappings,
 	getDomainRegistrations: getDomainRegistrations,
 	getGoogleApps: getGoogleApps,
@@ -703,8 +710,8 @@ module.exports = {
 	removePrivacyFromAllDomains: removePrivacyFromAllDomains,
 	siteRedirect: siteRedirect,
 	themeItem: themeItem,
-	isMonthlyPricingABTestParticipant: isMonthlyPricingABTestParticipant
-	setVolume: setVolume
+	setVolume: setVolume,
+	isPrivacyProduct: isPrivacyProduct,
 	customDesignItem,
 	noAdsItem,
 	videoPressItem,
