@@ -14,6 +14,7 @@ NODE_BIN := $(THIS_DIR)/node_modules/.bin
 
 # applications
 NODE ?= node
+NODEMON ?= nodemon
 NPM ?= $(NODE) $(shell which npm)
 BUNDLER ?= $(BIN)/bundler
 SASS ?= $(NODE_BIN)/node-sass --include-path 'client:shared'
@@ -45,7 +46,8 @@ install: node_modules
 
 # Simply running `make run` will spawn the Node.js server instance.
 run: githooks-commit install build
-	@$(NODE) build/bundle-$(CALYPSO_ENV).js
+	@$(NODE_BIN)/webpack --display-error-details --config webpack.config.node.js --watch &
+	@$(NODEMON) build/bundle-$(CALYPSO_ENV).js
 
 # a helper rule to ensure that a specific module is installed,
 # without relying on a generic `npm install` command
