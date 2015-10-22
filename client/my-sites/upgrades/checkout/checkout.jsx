@@ -118,6 +118,7 @@ module.exports = React.createClass( {
 
 	content: function() {
 		var selectedSite = this.props.sites.getSelectedSite();
+		var userSelectedPaymentBox;
 
 		if ( ! this.isLoading() && this.needsDomainDetails() ) {
 			return (
@@ -130,6 +131,19 @@ module.exports = React.createClass( {
 
 			return (
 				<SecurePaymentForm.Placeholder />
+			);
+		} else {
+			userSelectedPaymentBox = this.props.cart.products.length === 1 && this.props.cart.products[0].free_trial
+				? 'credits' : null;
+			return (
+				<SecurePaymentForm
+					cart={ this.props.cart }
+					transaction={ this.props.transaction }
+					cards={ this.props.cards }
+					products={ this.props.productsList.get() }
+					selectedSite={ selectedSite }
+					userSelectedPaymentBox={ userSelectedPaymentBox }
+					redirectTo={ this.props.redirectTo } />
 			);
 		}
 
