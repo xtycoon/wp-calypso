@@ -435,8 +435,8 @@ module.exports = {
 		pageTitleSetter( context )( i18n.translate( 'Recommended Sites For You' ) );
 	},
 
-	listManagementContents: function( context ) {
-		var listManagementContents = require( 'reader/list-management/contents' ),
+	listManagementFollowing: function( context ) {
+		var listManagementFollowing = require( 'reader/list-management/following' ),
 			basePath = route.sectionify( context.path ),
 			fullAnalyticsPageTitle = analyticsPageTitle + ' > Manage List',
 			mcKey = 'list_edit';
@@ -446,8 +446,8 @@ module.exports = {
 		trackPageLoad( basePath, fullAnalyticsPageTitle, mcKey );
 
 		React.render(
-			React.createElement( listManagementContents, {
-				key: 'list-management-contents',
+			React.createElement( listManagementFollowing, {
+				key: 'list-management-following',
 				list: {
 					owner: context.params.user,
 					slug: context.params.list
