@@ -36,6 +36,8 @@ CLIENT_CONFIG_FILE := client/config/index.js
 NODE_ENV ?= development
 CALYPSO_ENV ?= $(NODE_ENV)
 
+SERVER_BUILD_COMMAND ?= $(NODE_BIN)/webpack --display-error-details --config webpack.config.node.js
+
 export NODE_ENV := $(NODE_ENV)
 export CALYPSO_ENV := $(CALYPSO_ENV)
 export NODE_PATH := server:shared:$(THIS_DIR)
@@ -46,7 +48,7 @@ install: node_modules
 
 # Simply running `make run` will spawn the Node.js server instance.
 run: githooks-commit install build
-	@$(NODE_BIN)/webpack --display-error-details --config webpack.config.node.js --watch &
+	@$(SERVER_BUILD_COMMAND) --watch &
 	@$(NODEMON) build/bundle-$(CALYPSO_ENV).js
 
 # a helper rule to ensure that a specific module is installed,
@@ -107,7 +109,7 @@ server/devdocs/search-index.js: $(MD_FILES) $(ALL_DEVDOCS_JS)
 
 build-server: install
 	@mkdir -p build
-	@CALYPSO_ENV=$(CALYPSO_ENV) $(NODE_BIN)/webpack --display-error-details --config webpack.config.node.js
+	@CALYPSO_ENV=$(CALYPSO_ENV) $(SERVER_BUILD_COMMAND)
 
 build: install build-$(CALYPSO_ENV)
 
