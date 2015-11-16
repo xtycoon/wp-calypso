@@ -14,7 +14,7 @@ NODE_BIN := $(THIS_DIR)/node_modules/.bin
 
 # applications
 NODE ?= node
-NODEMON ?= nodemon
+NODEMON ?= $(NODE_BIN)/nodemon
 NPM ?= $(NODE) $(shell which npm)
 BUNDLER ?= $(BIN)/bundler
 SASS ?= $(NODE_BIN)/node-sass --include-path 'client:shared'
