@@ -45,12 +45,13 @@ const CancelPrivateRegistration = React.createClass( {
 			cancelling: true
 		} );
 
-		cancelPrivateRegistration( id, canceledSuccessfully => {
+		cancelPrivateRegistration( id, success => {
 			this.setState( {
 				cancelling: false,
 				disabled: false
 			} );
-			if ( canceledSuccessfully ) {
+
+			if ( success ) {
 				page( paths.managePurchaseDestination( domain, id, 'canceled-private-registration' ) );
 			}
 		} );
