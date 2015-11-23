@@ -6,10 +6,8 @@ import { combineReducers } from 'redux';
 /**
  * Internal dependencies
  */
-import sharing from 'lib/sharing/reducers';
-import siteSettings from 'lib/site-settings/reducers';
+import exporter from './exporter/reducers';
 
 export default combineReducers( {
-	sharing,
-	siteSettings
+	exporter
 } );
