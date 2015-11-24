@@ -15,6 +15,7 @@
 		"oauth": true,
 		"code-splitting": false,
 		"always_use_logout_url": true,
+		"notifications2beta": true,
 		"press-this": false,
 		"olark": false,
 		"login": false,
