@@ -131,8 +131,14 @@ const flows = {
 		destination: '/devdocs/welcome',
 		description: 'Signup flow for developers in developer environment',
 		lastModified: '2015-11-23'
-	}
+	},
 
+	mlb: {
+		steps: [ 'mlb-themes', 'domains', 'user' ],
+		destination: '/me/next?welcome',
+		description: 'Major League Baseball Blogs Signup flow',
+		lastModified: '2015-11-22'
+	}
 };
 
 function removeUserStepFromFlow( flow ) {
