@@ -1,0 +1,21 @@
+.security-checkup__recovery-emails-placholder {
+	.form-section-heading,
+	.security-checkup__recovery-email,
+	.form-button {
+		@include placeholder();
+	}
+}
+
+.security-checkup__recovery-emails {
+	margin: 0px 0px 30px 0px;
+}
+
+.security-checkup__recovery-emails-list {
+	margin: 0px;
+	list-style: none;
+}
+
+.security-checkup__recovery-email {
+	font-style: italic;
+	color: $gray;
+}

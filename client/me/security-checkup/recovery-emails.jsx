@@ -61,20 +61,14 @@ module.exports = React.createClass( {
 
 	renderRecoveryEmail: function( recoveryEmail ) {
 		return (
-			<li key={ recoveryEmail } >
-				{ recoveryEmail.email }
+			<li key={ recoveryEmail } className="security-checkup__recovery-email-container">
+				<span className="security-checkup__recovery-email">{ recoveryEmail.email }</span>
 				<ActionRemove />
 			</li>
 		);
 	},
 
 	getRecoveryEmails: function() {
-		if ( this.state.recoveryEmails.loading ) {
-			return(
-				<p>No recovery emails</p>
-			);
-		}
-
 		if ( isEmpty( this.state.recoveryEmails.data ) ) {
 			return(
 				<p>No recovery emails</p>
@@ -82,42 +76,52 @@ module.exports = React.createClass( {
 		}
 
 		return (
-			<ul>
+			<ul className="security-checkup__recovery-emails-list">
 				{ this.state.recoveryEmails.data.map( recoveryEmail => this.renderRecoveryEmail( recoveryEmail ) ) }
 			</ul>
 		);
 	},
 
+	renderRecoveryEmailsPlaceholder: function() {
+		return(
+			<div className="security-checkup__recovery-emails-placholder">
+				<div className="security-checkup__recovery-emails">
+					<FormSectionHeading>placeholder heading</FormSectionHeading>
+					<ul className="security-checkup__recovery-emails-list">
+						<li className="security-checkup__recovery-email">placeholder@placeholder.com</li>
+					</ul>
+				</div>
+				<div className="security-checkup__recovery-email-actions">
+					<FormButton>
+						placeholder
+					</FormButton>
+				</div>
+			</div>
+		);
+	},
+
 	renderRecoveryEmails: function() {
 		return(
-			<div>
-				<FormSectionHeading>Recovery emails placeholder</FormSectionHeading>
+			<div className="security-checkup__recovery-emails">
+				<FormSectionHeading>{ this.translate( 'Recovery emails' ) }</FormSectionHeading>
 				{ this.getRecoveryEmails() }
 			</div>
 		);
 	},
 
 	renderRecoveryEmailActions: function() {
-		if ( this.state.recoveryEmails.loading ) {
-			return(
-				<FormButton onClick={ this.addEmail } isPrimary={ false } >
-					{ this.translate( 'Place holder' ) }
-				</FormButton>
-			);
-		}
-
 		if ( this.state.isAddingRecoveryEmail ) {
 			return(
-				<div>
+				<div className="security-checkup__recovery-email-actions">
 					<FormFieldSet>
 						<FormTextInput valueLink={ this.linkState( 'recoveryEmail' ) } ></FormTextInput>
 						<FormSettingExplanation>{ this.translate( 'Your primary email address is {{email/}}', { components: { email: <strong>n.prasath.002@gmail.com</strong> } } ) }</FormSettingExplanation>
 					</FormFieldSet>
 					<FormButtonsBar>
 						<FormButton onClick={ this.saveEmail } >
-							{ this.state.submittingForm ? this.translate( 'Saving' ) : this.translate( 'Save' ) }
+							{ this.state.isSavingRecoveryEmail ? this.translate( 'Saving' ) : this.translate( 'Save' ) }
 						</FormButton>
-						<FormButton onClick={ this.cancelEmail }  isPrimary={ false } >
+						<FormButton onClick={ this.cancelEmail } isPrimary={ false } >
 							{ this.translate( 'Cancel' ) }
 						</FormButton>
 					</FormButtonsBar>
@@ -126,15 +130,21 @@ module.exports = React.createClass( {
 		}
 
 		return(
-			<FormButton onClick={ this.addEmail } isPrimary={ false } >
-				{ this.translate( 'Add Email' ) }
-			</FormButton>
+			<div className="security-checkup__recovery-email-actions">
+				<FormButton onClick={ this.addEmail } isPrimary={ false } >
+					{ this.translate( 'Add Email' ) }
+				</FormButton>
+			</div>
 		);
 	},
 
 	render: function() {
+		if ( this.state.recoveryEmails.loading ) {
+			return this.renderRecoveryEmailsPlaceholder();
+		}
+
 		return (
-			<div>
+			<div className="security-checkup__recovery-emails-container">
 				{ this.renderRecoveryEmails() }
 				{ this.renderRecoveryEmailActions() }
 			</div>
