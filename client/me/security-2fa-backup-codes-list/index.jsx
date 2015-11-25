@@ -65,7 +65,7 @@ module.exports = React.createClass( {
 		event.preventDefault();
 
 		if ( config.isEnabled( 'desktop' ) ) {
-			require( 'lib/desktop' ).print( this.getBackupCodeHTML( this.translate( 'Backup verification codes' ), this.props.backupCodes ) );
+			require( 'lib/desktop' ).print( this.translate( 'Backup verification codes' ), this.getBackupCodeHTML( this.props.backupCodes ) );
 		} else if ( this.openPopup() ) {
 			this.doPopup( this.props.backupCodes );
 		}
