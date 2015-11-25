@@ -84,7 +84,7 @@ module.exports = React.createClass( {
 							{ ...this.props }/>;
 					}.bind( this ) ) }
 				</div>
-				<div>
+				<div htmlClass="mlb-themes__terms">
 					<h2>MLB.com/blogs Rules</h2>
 					<p>
 						By clicking continue, you understand that activating an MLB.com/blogs account indicates your acceptance of the
