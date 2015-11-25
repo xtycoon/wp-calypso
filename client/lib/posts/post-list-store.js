@@ -1,14 +1,15 @@
 /**
  * External dependencies
  */
-import debugLogger from 'debug';
+import debugFactory from 'debug';
+const debug = debugFactory( 'calypso:posts-list' );
 import clone from 'lodash/lang/clone';
 import assign from 'lodash/object/assign';
 import transform from 'lodash/object/transform';
 import difference from 'lodash/array/difference';
 import last from 'lodash/array/last';
 import max from 'lodash/collection/max';
-import events from 'events/';
+import { EventEmitter } from 'events/';
 
 /**
  * Internal dependencies
@@ -21,24 +22,23 @@ import PostListCacheStore from './post-list-cache-store';
 /**
  * Module Variables
  */
-const debug = debugLogger( 'calypso:posts-list' );
-const EventEmitter = events.EventEmitter;
+const _defaultQuery = {
+	siteID: false,
+	type: 'post',
+	status: 'publish',
+	orderBy: 'date',
+	order: 'DESC',
+	author: false,
+	search: false,
+	perPage: 20
+};
+
+let _nextId = 0;
 
 module.exports = function( id ) {
 	if ( ! id ) {
 		throw new Error( 'must supply a post-list-store id' );
 	}
-
-	const _defaultQuery = {
-		siteID: false,
-		type: 'post',
-		status: 'publish',
-		orderBy: 'date',
-		order: 'DESC',
-		author: false,
-		search: false,
-		perPage: 20
-	};
 
 	let _activeList = {
 		postIds: [],
@@ -51,11 +51,8 @@ module.exports = function( id ) {
 		isFetchingUpdated: false
 	};
 
-	let _nextId = 0;
-
 	function queryPosts( options ) {
 		let query = assign( {}, _defaultQuery, options );
-		let list;
 
 		if ( query.siteID && typeof query.siteID === 'string' ) {
 			query.siteID = query.siteID.replace( /::/g, '/' );
@@ -65,7 +62,7 @@ module.exports = function( id ) {
 			query.orderBy = 'modified';
 		}
 
-		list = PostListCacheStore.get( query );
+		let list = PostListCacheStore.get( query );
 
 		if ( list ) {
 			_activeList = list;
