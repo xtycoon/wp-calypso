@@ -113,9 +113,7 @@ var EditorDrawer = React.createClass( {
 	},
 
 	renderSharing: function() {
-		return (
-			<EditorSharingContainer site={ this.props.site } />
-		);
+		return <EditorSharingContainer />;
 	},
 
 	renderFeaturedImage: function() {
