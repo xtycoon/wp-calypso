@@ -38,7 +38,7 @@ module.exports = React.createClass( {
 		return null;
 	},
 
-	renderDisabledInfo: function( id ) {
+	renderDisabledInfo: function() {
 		return (
 			<div className="plugin-action__disabled-info">
 				<InfoPopover
@@ -50,43 +50,42 @@ module.exports = React.createClass( {
 					>
 					{ this.props.disabledInfo }
 				</InfoPopover>
-				{ this.renderLabel( id ) }
+				{ this.renderLabel() }
 			</div>
 		);
 	},
 
-	renderToggle: function( id ) {
+	renderToggle: function() {
 		return (
 			<CompactToggle
 				onChange={ this.props.action }
 				checked={ this.props.status }
 				toggling={ this.props.inProgress }
 				disabled={ this.props.disabled }
-				id={ id }
+				id={ this.props.htmlFor }
 			>
-				{ this.renderLabel( id ) }
+				{ this.renderLabel() }
 			</CompactToggle>
 		);
 	},
 
-	renderChildren: function( id ) {
+	renderChildren: function() {
 		return (
 			<div>
 				<span className="plugin-action__children">{ this.props.children }</span>
-				{ this.renderLabel( id ) }
+				{ this.renderLabel() }
 			</div>
 		);
 	},
 
 	renderInner: function() {
-		var id = this.props.htmlFor;
 		if ( this.props.disabledInfo ) {
-			return this.renderDisabledInfo( id );
+			return this.renderDisabledInfo();
 		}
 		return (
 		0 < React.Children.count( this.props.children )
-			? this.renderChildren( id )
-			: this.renderToggle( id )
+			? this.renderChildren()
+			: this.renderToggle()
 		);
 	},
 
