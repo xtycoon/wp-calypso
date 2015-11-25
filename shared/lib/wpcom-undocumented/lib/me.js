@@ -283,4 +283,29 @@ UndocumentedMe.prototype.deleteAccountRecoveryEmail = function( callback ) {
 	return this.wpcom.req.post( args, callback );
 };
 
+UndocumentedMe.prototype.newAccountRecoveryPhone = function( country, phoneNumber, callback ) {
+	var args = {
+		apiVersion: '1.1',
+		path: '/me/account-recovery/phone/new',
+		body: {
+			country: country,
+			phone_number: phoneNumber
+		}
+	};
+
+	return this.wpcom.req.post( args, callback );
+};
+
+UndocumentedMe.prototype.validateAccountRecoveryPhone = function( code, callback ) {
+	var args = {
+		apiVersion: '1.1',
+		path: '/me/account-recovery/phone/validate',
+		body: {
+			code: code
+		}
+	};
+
+	return this.wpcom.req.post( args, callback );
+};
+
 module.exports = UndocumentedMe;

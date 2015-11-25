@@ -15,6 +15,11 @@ import FormButtonsBar from 'components/forms/form-buttons-bar';
 import FormPhoneInput from 'components/forms/form-phone-input';
 import FormTextInput from 'components/forms/form-text-input';
 import countriesList from 'lib/countries-list';
+import wpcomLib from 'lib/wp';
+
+const wpcom = wpcomLib.undocumented();
+
+// @TODO initialise phone input data
 
 module.exports = React.createClass( {
 	displayName: 'SecurityCheckupRecoveryPhone',
@@ -33,7 +38,7 @@ module.exports = React.createClass( {
 		return {
 			recoveryPhone: AccountRecoveryStore.getPhone(),
 			recoveryPhoneScreen: 'recoveryPhone',
-			verfificationCode: '',
+			verificationCode: '',
 			isSavingRecoveryPhone: false,
 			isVerifyingCode: false,
 			isSendingCode: false
@@ -52,15 +57,37 @@ module.exports = React.createClass( {
 	},
 
 	sendCode: function() {
-		this.setState( { recoveryPhoneScreen: 'verfiyRecoveryPhone' } );
+		// @TODO check phone data is not empty
+
+		wpcom.me().newAccountRecoveryPhone( this.state.phoneNumber.countryData.code, this.state.phoneNumber.phoneNumber, ( error ) => {
+			if ( error ) {
+				// display a message unable to send code please try again later
+				return;
+			}
+
+			this.setState( { recoveryPhoneScreen: 'verfiyRecoveryPhone' } );
+		} );
 	},
 
 	verifyCode: function() {
-		this.setState( { recoveryPhoneScreen: 'recoveryPhone' } );
+		// @TODO check verification code is valid and not empty
+
+		wpcom.me().validateAccountRecoveryPhone( this.state.verificationCode, ( error ) => {
+			if ( error ) {
+				// display a message unable to send code please try again later
+				return;
+			}
+
+			this.setState( { recoveryPhoneScreen: 'recoveryPhone' } );
+		} );
 	},
 
 	cancel: function() {
 		this.setState( { recoveryPhoneScreen: 'recoveryPhone' } );
+	},
+
+	onChangePhoneInput: function( phoneNumber ) {
+		this.setState( { phoneNumber } );
 	},
 
 	recoveryPhonePlaceHolder: function() {
@@ -104,6 +131,9 @@ module.exports = React.createClass( {
 			<div>
 				<FormPhoneInput
 					countriesList={ countriesList.forSms() }
+					initialCountryCode="LK"
+					initialPhoneNumber="775143910"
+					onChange={ this.onChangePhoneInput }
 					/>
 				<FormButtonsBar>
 					<FormButton onClick={ this.sendCode } >
