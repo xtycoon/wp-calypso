@@ -43,7 +43,7 @@ var FreeTrialConfirmationBox = React.createClass( {
 		} );
 
 		return (
-			<PaymentBox	classSet={ classSet }>
+			<PaymentBox classSet={ classSet }>
 				{ this.content() }
 			</PaymentBox>
 		);
