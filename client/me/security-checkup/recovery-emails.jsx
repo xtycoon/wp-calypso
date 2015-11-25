@@ -52,7 +52,7 @@ module.exports = React.createClass( {
 
 	saveEmail: function() {
 		SecurityCheckupActions.updateEmail( this.state.recoveryEmail );
-		this.setState( { isAddingRecoveryEmail: false } );
+		this.setState( { isSavingRecoveryEmail: true } );
 	},
 
 	cancelEmail: function() {
@@ -61,7 +61,7 @@ module.exports = React.createClass( {
 
 	renderRecoveryEmail: function( recoveryEmail ) {
 		return (
-			<li key={ recoveryEmail } className="security-checkup__recovery-email-container">
+			<li key={ recoveryEmail.email } className="security-checkup__recovery-email-container">
 				<span className="security-checkup__recovery-email">{ recoveryEmail.email }</span>
 				<ActionRemove />
 			</li>
