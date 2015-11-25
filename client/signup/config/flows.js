@@ -134,7 +134,7 @@ const flows = {
 	},
 
 	mlb: {
-		steps: [ 'mlb-themes', 'domains', 'user' ],
+		steps: [ 'mlb-themes', 'mlb-domains', 'user' ],
 		destination: '/me/next?welcome',
 		description: 'Major League Baseball Blogs Signup flow',
 		lastModified: '2015-11-22'

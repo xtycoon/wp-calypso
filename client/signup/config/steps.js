@@ -69,5 +69,12 @@ module.exports = {
 		stepName: 'mlb-themes',
 		apiRequestFunction: stepActions.setThemeOnSite,
 		dependencies: [ 'siteSlug' ]
+	},
+
+	'mlb-domains': {
+		stepName: 'mlb-domains',
+		apiRequestFunction: stepActions.addDomainItemsToCart,
+		providesDependencies: [ 'siteSlug', 'domainItem' ],
+		delayApiRequestUntilComplete: true
 	}
 };
