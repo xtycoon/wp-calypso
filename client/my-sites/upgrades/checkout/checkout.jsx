@@ -107,13 +107,19 @@ module.exports = React.createClass( {
 	},
 
 	getCheckoutCompleteRedirectPath: function() {
-		var renewalItem;
+		var renewalItem, path;
 		if ( cartItems.hasRenewalItem( this.props.cart ) ) {
 			renewalItem = cartItems.getRenewalItems( this.props.cart )[ 0 ];
-			return purchasePaths.managePurchaseDestination( renewalItem.extra.purchaseDomain, renewalItem.extra.purchaseId, 'thank-you' );
+			path = purchasePaths.managePurchaseDestination( renewalItem.extra.purchaseDomain, renewalItem.extra.purchaseId, 'thank-you' );
+		} else {
+			path = '/checkout/thank-you';
 		}
 
-		return '/checkout/thank-you';
+		if ( this.props.cart.products.length === 1 && this.props.cart.products[0].free_trial ) {
+			path += '?free-trial=1';
+		}
+
+		return path;
 	},
 
 	content: function() {
@@ -132,10 +138,6 @@ module.exports = React.createClass( {
 			return (
 				<SecurePaymentForm.Placeholder />
 			);
-		} 
-
-		if ( this.props.cart.products.length === 1 && this.props.cart.products[0].free_trial ) {
-			redirectTo += '?free-trial=1';
 		}
 
 		return (
