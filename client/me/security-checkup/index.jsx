@@ -34,10 +34,8 @@ module.exports = React.createClass( {
 
 				<ReauthRequired twoStepAuthorization={ twoStepAuthorization } />
 
-				<CompactCard className="security-checkup-intro">
-					<p className="security-checkup-intro__text">
-						{ this.translate( 'Keep your account safe by adding a backup email address and phone number. If you ever have problems accessing your account, WordPress.com will use what you enter here to verify your identity.' ) }
-					</p>
+				<CompactCard>
+					{ this.translate( 'Keep your account safe by adding a backup email address and phone number. If you ever have problems accessing your account, WordPress.com will use what you enter here to verify your identity.' ) }
 				</CompactCard>
 
 				<CompactCard>
