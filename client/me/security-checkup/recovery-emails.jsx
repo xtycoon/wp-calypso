@@ -40,6 +40,12 @@ module.exports = React.createClass( {
 	},
 
 	refreshRecoveryEmails: function() {
+		if ( ! AccountRecoveryStore.isSavingRecoveryEmail() ) {
+			if ( this.state.isAddingRecoveryEmail ) {
+				this.setState( { isAddingRecoveryEmail: false } );
+			}
+		}
+
 		this.setState( {
 			recoveryEmails: AccountRecoveryStore.getEmails(),
 			isSavingRecoveryEmail: AccountRecoveryStore.isSavingRecoveryEmail()

@@ -63,20 +63,6 @@ function emitChange() {
 	AccountRecoveryStore.emit( 'change' );
 }
 
-function updatePhone( phone ) {
-	_phone.data = assign( {}, phone );
-}
-
-function updateEmails( emails ) {
-	_emails.data = emails
-}
-
-function removeEmail( email ) {
-	_emails.data = {
-		emails: _emails.data.remove( email )
-	};
-}
-
 function fetchFromAPIIfNotInitialized() {
 	if ( _initialized ) {
 		return;
@@ -96,13 +82,32 @@ function fetchFromAPI() {
 		_loading = false;
 
 		if ( error ) {
-			handleError( error );
+			// @TODO handle error
 			return;
 		}
 
 		handleResponse( data );
 	} );
 }
+
+function updatePhone( phone ) {
+	_phone.data = assign( {}, phone );
+}
+
+function updateEmails( emails ) {
+	_emails.data = emails
+}
+
+function updateEmail( email ) {
+	_emails.data = assign( _emails.data, email );
+}
+
+function removeEmail( email ) {
+	_emails.data = {
+		emails: _emails.data.remove( email )
+	};
+}
+
 
 function handleResponse( data ) {
 	if ( data.phone ) {
@@ -118,44 +123,6 @@ function handleResponse( data ) {
 		updateEmails( data.emails );
 	}
 
-	emitChange();
-}
-
-function setPhoneNotice( message, type ) {
-	_phone.lastNotice = {
-		type: type,
-		message: message
-	};
-}
-
-function setEmailNotice( message, type ) {
-	_emails.lastNotice = {
-		type: type,
-		message: message
-	};
-}
-
-function resetEmailNotice() {
-	_emails.lastNotice = false;
-}
-
-function resetPhoneNotice() {
-	_phone.lastNotice = false;
-}
-
-function handleEmailError( error ) {
-	setEmailNotice( error.message, 'error' );
-	emitChange();
-}
-
-function handlePhoneError( error ) {
-	setPhoneNotice( error.message, 'error' );
-	emitChange();
-}
-
-function handleError( error ) {
-	setPhoneNotice( error.message, 'error' );
-	setEmailNotice( error.message, 'error' );
 	emitChange();
 }
 
@@ -211,6 +178,7 @@ AccountRecoveryStore.dispatchToken = Dispatcher.register( function( payload ) {
 				break;
 			}
 
+			updateEmail( action.email );
 			_emails.lastRequestStatus.isSuccessfull = false;
 			_emails.lastRequestStatus.message = messages.EMAIL_ADDED;
 			emitChange();
