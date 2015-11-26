@@ -106,12 +106,13 @@ public/editor.css: node_modules $(SASS_FILES)
 server/devdocs/search-index.js: $(MD_FILES) $(ALL_DEVDOCS_JS)
 	@$(ALL_DEVDOCS_JS) $(MD_FILES)
 
-build-server: install
+builddir:
 	@mkdir -p build
+
+build-server: install builddir
 	@CALYPSO_ENV=$(CALYPSO_ENV) $(SERVER_BUILD_COMMAND)
 
-build-and-watch-server: install
-	@mkdir -p build
+build-and-watch-server: install builddir
 	@CALYPSO_ENV=$(CALYPSO_ENV) $(SERVER_BUILD_COMMAND) --watch &
 
 build: install build-$(CALYPSO_ENV)
