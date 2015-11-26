@@ -96,7 +96,6 @@ module.exports = React.createClass( {
 	},
 
 	render: function() {
-		const defaultDependencies = this.props.useHeadstart ? { theme: 'vip/parnter-mlb-fan', images: null } : undefined;
 		return (
 			<StepWrapper
 				headerText={ this.translate( 'Welcome to MLB.com/blogs.' ) }
@@ -104,7 +103,6 @@ module.exports = React.createClass( {
 				fallbackSubHeaderText={ this.translate( 'No need to overthink it. You can always switch to a different theme\u00a0later.' ) }
 				subHeaderText={ this.translate( 'After choosing your team and theme below you\'ll be ready to start blogging.' ) }
 				stepContent={ this.renderThemes() }
-				defaultDependencies={ defaultDependencies }
 				{ ...this.props } />
 		);
 	}
