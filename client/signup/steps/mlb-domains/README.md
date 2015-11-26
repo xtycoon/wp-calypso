@@ -4,7 +4,7 @@ This step is used by the MLB blogs signup flow (flow `mlb`)
 
 This step offers the user:
 
-* Domain selection with proposal of free .mlblogs.com domain and regular ``.wordpress.com` domains and prices.
+* Domain selection with proposal of free .mlblogs.com domain and regular `.wordpress.com` domains and prices.
 
 ### Copytext
 
