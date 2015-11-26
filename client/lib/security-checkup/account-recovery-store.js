@@ -3,6 +3,7 @@
  */
 var debug = require( 'debug' )( 'calypso:lib:security-checkup:account-recovery-store' ),
 	assign = require( 'lodash/object/assign' ),
+	remove = require( 'lodash/array/remove' ),
 	isEmpty = require( 'lodash/lang/isEmpty' );
 
 /**
@@ -98,10 +99,12 @@ function updateEmails( emails ) {
 	_emails.data = emails
 }
 
-function removeEmail( email ) {
-	_emails.data = {
-		emails: _emails.data.remove( email )
-	};
+function removeEmail( deletedEmail ) {
+	_emails.data = remove( _emails.data, function( recoveryEamil ) {
+		return recoveryEamil.email !== deletedEmail;
+	}  );
+
+	emitChange();
 }
 
 function handleResponse( data ) {
@@ -173,24 +176,26 @@ AccountRecoveryStore.dispatchToken = Dispatcher.register( function( payload ) {
 				break;
 			}
 
-			_emails.lastRequestStatus.isSuccessfull = false;
+			_emails.lastRequestStatus.isSuccessfull = true;
 			_emails.lastRequestStatus.message = messages.EMAIL_ADDED;
 			emitChange();
 			break;
 
 		case actions.DELETE_ACCOUNT_RECOVERY_EMAIL:
-			removeEmail( action.email );
 			emitChange();
 			break;
 
 		case actions.RECEIVE_DELETED_ACCOUNT_RECOVERY_EMAIL:
 			if ( action.error ) {
-				handleEmailError( action.error );
+				_emails.lastRequestStatus.isSuccessfull = false;
+				_emails.lastRequestStatus.message = action.error;
+				emitChange();
 				break;
 			}
 
 			removeEmail( action.email );
-			setEmailNotice( messages.EMAIL_DELETED );
+			_emails.lastRequestStatus.isSuccessfull = true;
+			_emails.lastRequestStatus.message = messages.EMAIL_DELETED; // @TODO display email here
 			emitChange();
 			break;
 

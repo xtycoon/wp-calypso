@@ -274,10 +274,13 @@ UndocumentedMe.prototype.updateAccountRecoveryEmail = function( email, callback 
 	return this.wpcom.req.post( args, callback );
 };
 
-UndocumentedMe.prototype.deleteAccountRecoveryEmail = function( callback ) {
+UndocumentedMe.prototype.deleteAccountRecoveryEmail = function( email, callback ) {
 	var args = {
 		apiVersion: '1.1',
-		path: '/me/account-recovery/email/delete'
+		path: '/me/account-recovery/email/delete',
+		body: {
+			email: email
+		}
 	};
 
 	return this.wpcom.req.post( args, callback );

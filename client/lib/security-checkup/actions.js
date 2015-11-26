@@ -69,14 +69,16 @@ var SecurityCheckupActions = {
 		} );
 	},
 
-	deleteEmail: function() {
+	deleteEmail: function( email ) {
 		Dispatcher.handleViewAction( {
-			type: actions.DELETE_ACCOUNT_RECOVERY_EMAIL
+			type: actions.DELETE_ACCOUNT_RECOVERY_EMAIL,
+			email: email
 		} );
 
-		me.deleteAccountRecoveryEmail( function( error, data ) {
+		me.deleteAccountRecoveryEmail( email, function( error, data ) {
 			Dispatcher.handleServerAction( {
 				type: actions.RECEIVE_DELETED_ACCOUNT_RECOVERY_EMAIL,
+				email: email,
 				data: data,
 				error: error
 			} );
