@@ -77,11 +77,13 @@ module.exports = React.createClass( {
 				<h3>{ this.translate( 'Theme' ) }</h3>
 				<div>
 					{ this.props.variations.map( function( variation ) {
-						return <MlbThemeThumbnail
-							key={ variation }
-							variation={ variation }
-							team={ this.state.team }
-							{ ...this.props }/>;
+						return (
+							<MlbThemeThumbnail
+								key={ variation }
+								variation={ variation }
+								team={ this.state.team }
+								{ ...this.props } />
+						);
 					}.bind( this ) ) }
 				</div>
 				<div htmlClass="mlb-themes__terms">
