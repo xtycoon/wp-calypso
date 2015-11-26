@@ -98,16 +98,11 @@ function updateEmails( emails ) {
 	_emails.data = emails
 }
 
-function updateEmail( email ) {
-	_emails.data = assign( _emails.data, email );
-}
-
 function removeEmail( email ) {
 	_emails.data = {
 		emails: _emails.data.remove( email )
 	};
 }
-
 
 function handleResponse( data ) {
 	if ( data.phone ) {
@@ -178,7 +173,6 @@ AccountRecoveryStore.dispatchToken = Dispatcher.register( function( payload ) {
 				break;
 			}
 
-			updateEmail( action.email );
 			_emails.lastRequestStatus.isSuccessfull = false;
 			_emails.lastRequestStatus.message = messages.EMAIL_ADDED;
 			emitChange();
