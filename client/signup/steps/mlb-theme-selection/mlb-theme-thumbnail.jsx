@@ -21,22 +21,12 @@ module.exports = React.createClass( {
 			themeSlug = "vip/" + ThemeHelper.getSlugFromName( this.props.variation ) + '/' + this.props.team;
 		}
 
-		if ( true === this.props.useHeadstart && themeSlug ) {
-			analytics.tracks.recordEvent( 'calypso_signup_theme_select', { theme: themeSlug, headstart: true } );
-
-			SignupActions.submitSignupStep( { stepName: this.props.stepName }, null, {
-				theme: 'vip/' + themeSlug,
-				images: undefined
-			} );
-		} else {
-			analytics.tracks.recordEvent( 'calypso_signup_theme_select', { theme: themeSlug, headstart: false } );
-
-			SignupActions.submitSignupStep( {
-				stepName: this.props.stepName,
-				processingMessage: this.translate( 'Adding your theme' ),
-				themeSlug
-			} );
-		}
+		analytics.tracks.recordEvent( 'calypso_signup_theme_select', { theme: themeSlug, headstart: false } );
+		SignupActions.submitSignupStep( {
+			stepName: this.props.stepName,
+			processingMessage: this.translate( 'Adding your theme' ),
+			themeSlug
+		} );
 
 		this.props.goToNextStep();
 	},
