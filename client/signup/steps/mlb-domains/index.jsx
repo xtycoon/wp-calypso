@@ -18,18 +18,18 @@ module.exports = React.createClass( {
 	displayName: 'MlbDomainsStep',
 
 	getInitialState: function() {
-		return { blogName: '' };
+		return { siteUrl: '' };
 	},
 
 	handleNameChange: function( event ) {
 		event.preventDefault();
-		this.setState( { blogName: event.target.value } );
+		this.setState( { siteUrl: event.target.value } );
 	},
 
 	handleSubmit: function( event ) {
 		event.preventDefault();
 
-		const siteUrl = this.state.blogName,
+		const siteUrl = this.state.siteUrl,
 			domainItem = undefined;
 
 		SignupActions.submitSignupStep( {
