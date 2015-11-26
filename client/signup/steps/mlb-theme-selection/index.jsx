@@ -86,10 +86,10 @@ module.exports = React.createClass( {
 						);
 					}.bind( this ) ) }
 				</div>
-				<div htmlClass="mlb-themes__terms">
+				<div className="mlb-themes__terms">
 					<h2>{ this.translate( 'MLB.com/blogs Rules') } </h2>
 					<p>
-						{ this.translate( 'By clicking continue, you understand that activating an MLB.com/blogs account indicates your acceptance of the {{a}}Terms of Use{{/a}}', {
+						{ this.translate( 'By selecting a theme or clicking Skip, you understand that activating an MLB.com/blogs account indicates your acceptance of the {{a}}Terms of Use{{/a}}', {
 							components: {
 								a: <a href="http://mlb.mlb.com/mlb/official_info/about_mlb_com/terms_of_use.jsp" target="_blank" />
 							}
