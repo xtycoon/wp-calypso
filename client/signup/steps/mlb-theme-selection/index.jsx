@@ -66,8 +66,8 @@ module.exports = React.createClass( {
 		return (
 			<div>
 				<div>
-					<label htmlFor="team_field">{ this.translate( 'Your team' ) }</label>
-					<select onChange={ this.handleTeamSelect } name="team_field">
+					<label htmlFor="team-field">{ this.translate( 'Your team' ) }</label>
+					<select onChange={ this.handleTeamSelect } name="team-field">
 						{ Object.keys( this.props.teams ).map( ( key ) => {
 							let team = this.props.teams[ key ];
 							return <option key={ key } value={ key }>{ team }</option>;
