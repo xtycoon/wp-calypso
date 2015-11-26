@@ -72,8 +72,7 @@ module.exports = React.createClass( {
 			};
 		} );
 		options = options.concat( products );
-		return <SelectDropdown options={ options }>
-			</SelectDropdown>;
+		return <SelectDropdown options={ options } />
 	},
 
 	render: function() {
