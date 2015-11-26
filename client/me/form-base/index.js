@@ -6,7 +6,8 @@ var debug = require( 'debug' )( 'calypso:me:form-base' );
 /**
  * Internal dependencies
  */
-var notices = require( 'notices' );
+var notices = require( 'notices' ),
+	formatting = require( 'lib/formatting' );
 
 module.exports = {
 	componentDidMount: function() {
@@ -52,7 +53,7 @@ module.exports = {
 
 	valueLink: function( settingName ) {
 		return {
-			value: this.props.userSettings.getSetting( settingName ),
+			value: formatting.decodeEntities( this.props.userSettings.getSetting( settingName ) ),
 			requestChange: function( value ) {
 				this.props.userSettings.updateSetting( settingName, value );
 			}.bind( this )
