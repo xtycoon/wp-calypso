@@ -73,8 +73,8 @@ module.exports = {
 
 	'mlb-domains': {
 		stepName: 'mlb-domains',
-		apiRequestFunction: stepActions.addDomainItemsToCart,
-		providesDependencies: [ 'siteSlug', 'domainItem' ],
+		apiRequestFunction: stepActions.createSite,
+		providesDependencies: [ 'siteSlug' ],
 		delayApiRequestUntilComplete: true
 	}
 };
