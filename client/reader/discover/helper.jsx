@@ -5,6 +5,9 @@ var find = require( 'lodash/collection/find' ),
 	get = require( 'lodash/object/get' ),
 	url = require( 'url' );
 
+// Internal dependencies
+var urlHelper = require( 'reader/url-helper' );
+
 module.exports = {
 	isDiscoverPost: function( post ) {
 		return !! post.discover_metadata;
@@ -27,7 +30,7 @@ module.exports = {
 		// If we have a blog ID, we want to send them to the site detail page
 		const blogId = get( post, 'discover_metadata.featured_post_wpcom_data.blog_id' );
 		if ( blogId ) {
-			return `/read/blog/id/${blogId}`;
+			return urlHelper.getSiteUrl( blogId );
 		}
 
 		return post.discover_metadata.permalink;
