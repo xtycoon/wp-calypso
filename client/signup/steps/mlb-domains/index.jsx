@@ -101,7 +101,11 @@ module.exports = React.createClass( {
 					stepContent={ content } { ...this.props } goToNextStep={ false } />
 
 					<div>
-						You agree to the <a href="http://wordpress.com/tos/" target="_blank">fascinating terms of service</a> by submitting this form.
+						{ this.translate( 'You agree to the {{a}}fascinating terms of service{{/a}} by submitting this form.', {
+							components: {
+								a: <a href="http://wordpress.com/tos/" target="_blank" />
+							}
+						} ) }
 					</div>
 			</div>
 			);
