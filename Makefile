@@ -48,7 +48,7 @@ install: node_modules
 
 # Simply running `make run` will spawn the Node.js server instance.
 run: githooks-commit install build
-	@$(NODEMON) --watch build/bundle-$(CALYPSO_ENV).js
+	@$(NODEMON) --watch build build/bundle-$(CALYPSO_ENV).js
 
 # a helper rule to ensure that a specific module is installed,
 # without relying on a generic `npm install` command
