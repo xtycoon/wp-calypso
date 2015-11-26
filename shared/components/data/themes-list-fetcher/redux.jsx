@@ -12,7 +12,7 @@ import { connect } from 'react-redux';
  * Internal dependencies
  */
 import Constants from 'lib/themes/constants';
-import * as allActions from 'lib/themes/pure-actions';
+import * as allActions from 'lib/themes/actions';
 import { getThemeById } from 'lib/themes/reducers/themes';
 import { getThemesList, getQueryParams, isLastPage, isFetchingNextPage } from 'lib/themes/reducers/themes-list';
 
@@ -20,8 +20,8 @@ const actions = pick( allActions, [
 	'query',
 	'fetchNextPage',
 	'incrementThemesPage',
-	'fetch',
-	'fetchJetpack',
+	'fetchThemes',
+	'fetchJetpackThemes',
 ] );
 
 function getThemesState( state ) {
@@ -89,15 +89,15 @@ let ThemesListFetcher = React.createClass( {
 
 			// actions assumed bound to dispatch
 			incrementThemesPage,
-			fetch,
-			fetchJetpack,
+			fetchThemes,
+			fetchJetpackThemes,
 		} = this.props;
 
 		if ( options.triggeredByScroll ) {
 			onRealScroll();
 		}
 
-		const fetcher = site.jetpack ? fetchJetpack : fetch;
+		const fetcher = site.jetpack ? fetchJetpackThemes : fetchThemes;
 		incrementThemesPage( site );
 		fetcher( site );
 	},

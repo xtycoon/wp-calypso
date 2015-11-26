@@ -146,3 +146,7 @@ export function getQueryParams( state ) {
 export function isFetchingNextPage( state ) {
 	return state.getIn( [ 'queryState', 'isFetchingNextPage' ] );
 }
+
+export function isLastPage( state ) {
+	return state.getIn( [ 'queryState', 'isLastPage' ] );
+}
