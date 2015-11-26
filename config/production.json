@@ -67,6 +67,7 @@
 		"upgrades/purchases/list": true,
 		"upgrades/purchases/manage": true,
 		"upgrades/purchases/payment": true,
+		"upgrades/cart/multi-year-domain": false,
 		"muse": true,
 		"olark": true,
 		"olark_use_wpcom_configuration": false,
