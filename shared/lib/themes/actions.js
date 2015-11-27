@@ -11,6 +11,7 @@ const debug = debugFactory( 'calypso:themes:actions' ); //eslint-disable-line no
  */
 import ThemeConstants from 'lib/themes/constants';
 import ThemeHelpers from './helpers';
+import { searchJetpackThemes } from './selectors';
 import { getCurrentTheme } from './reducers/current-theme';
 import { getThemeById } from './reducers/themes';
 import { getQueryParams } from './reducers/themes-list';
@@ -28,6 +29,7 @@ export function fetchThemes( site ) {
 			} else {
 				const responseTime = ( new Date().getTime() ) - startTime;
 				dispatch( receiveThemes( data, site, queryParams, responseTime ) );
+				dispatch( fetchJetpackThemes( site ) );
 			}
 		};
 
@@ -49,6 +51,7 @@ export function fetchJetpackThemes( site ) {
 
 		dispatch( {
 			type: ThemeConstants.SEARCH_THEMES,
+			themesList: searchJetpackThemes( getState() )
 		} );
 	}
 }

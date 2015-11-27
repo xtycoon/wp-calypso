@@ -2,14 +2,12 @@
  * External dependencies
  */
 import { fromJS } from 'immutable';
-import filter from 'lodash/collection/filter';
 import pluck from 'lodash/collection/pluck';
 import unique from 'lodash/array/unique';
 
 /**
  * Internal dependencies
  */
-import ThemesStore from '../stores/themes';
 import ThemesLastQueryStore from '../stores/themes-last-query';
 import ThemeConstants from '../constants';
 
@@ -51,19 +49,6 @@ function query( state, params = {} ) {
 		.update( 'nextId', id => id + 1 );
 }
 
-function searchJetpackThemes( state ) {
-	if ( ! ThemesLastQueryStore.isJetpack() ) {
-		return state;
-	}
-
-	const { search } = ThemesLastQueryStore.getParams();
-	const themes = search
-		? filter( ThemesStore.getThemes(), theme => matches( theme, search ) )
-		: ThemesStore.getThemes();
-
-	return state.set( 'list', pluck( themes, 'id' ) );
-}
-
 /**
  * Pure helpers
  */
@@ -72,20 +57,6 @@ function isActionForLastPage( list, action ) {
 	return ! action.found ||
 		list.length === action.found ||
 		action.themes.length === 0;
-}
-
-function join( value ) {
-	return Array.isArray( value ) ? value.join( ' ' ) : value;
-}
-
-function matches( theme, rawSearch ) {
-	const search = rawSearch.toLowerCase().trim();
-
-	return [ 'name', 'tags', 'description', 'author' ].some( field => (
-		theme[ field ] && join( theme[ field ] )
-			.toLowerCase().replace( '-', ' ' )
-			.indexOf( search ) >= 0
-	) );
 }
 
 export const reducer = ( state = initialState, payload ) => {
@@ -104,9 +75,11 @@ export const reducer = ( state = initialState, payload ) => {
 						.setIn( [ 'queryState', 'isFetchingNextPage' ], false )
 						.update( 'list', add.bind( null, pluck( action.themes, 'id' ) ) );
 
-				return searchJetpackThemes(
-					newState.setIn( [ 'queryState', 'isLastPage' ],
-						isActionForLastPage( newState.get( 'list' ), action ) ) );
+				return newState.setIn( [ 'queryState', 'isLastPage' ],
+						isActionForLastPage( newState.get( 'list' ), action ) );
+				//return searchJetpackThemes(
+				//	newState.setIn( [ 'queryState', 'isLastPage' ],
+				//		isActionForLastPage( newState.get( 'list' ), action ) ) );
 			}
 			return state;
 
@@ -128,9 +101,13 @@ export const reducer = ( state = initialState, payload ) => {
 			return state.set( 'active', action.theme.id );
 
 		case ThemeConstants.SEARCH_THEMES:
-			return searchJetpackThemes(
-				state.setIn( [ 'queryState', 'isFetchingNextPage' ], false )
-			);
+			const { themesList } = action;
+			return themesList
+				.setIn( [ 'queryState', 'isFetchingNextPage' ], false );
+
+			//return searchJetpackThemes(
+			//	state.setIn( [ 'queryState', 'isFetchingNextPage' ], false )
+			//);
 	}
 	return state;
 };

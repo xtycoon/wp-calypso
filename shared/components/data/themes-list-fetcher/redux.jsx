@@ -52,6 +52,12 @@ let ThemesListFetcher = React.createClass( {
 		onLastPage: React.PropTypes.func
 	},
 
+	componentDidMount: function() {
+		if ( this.props.site || this.props.isMultisite ) {
+			this.queryThemes();
+		}
+	},
+
 	queryThemes: function() {
 		const {
 			onLastPage,
