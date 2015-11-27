@@ -18,7 +18,7 @@ import HeaderCake from 'components/header-cake';
 import Main from 'components/main';
 import NoticeArrowLink from 'notices/arrow-link';
 import PaymentLogo from 'components/payment-logo';
-import SimpleNotice from 'notices/simple-notice';
+import SimpleNotice from 'components/notice';
 import VerticalNavItem from 'components/vertical-nav/item';
 import paths from '../paths';
 import * as upgradesActions from 'lib/upgrades/actions';

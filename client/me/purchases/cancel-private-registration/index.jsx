@@ -15,7 +15,7 @@ import HeaderCake from 'components/header-cake';
 import paths from '../paths';
 import { isRefundable } from 'lib/purchases';
 import { cancelPrivateRegistration } from 'lib/upgrades/actions';
-import SimpleNotice from 'notices/simple-notice';
+import SimpleNotice from 'components/notice';
 import { goToManagePurchase, isDataLoading, recordPageView } from '../utils';
 
 const CancelPrivateRegistration = React.createClass( {
