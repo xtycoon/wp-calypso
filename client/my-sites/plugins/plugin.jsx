@@ -244,6 +244,31 @@ export default React.createClass( {
 		);
 	},
 
+	getMockPlugin() {
+		const selectedSite = {
+			slug: 'no-slug',
+			canUpdateFiles: true,
+			name: 'Not a real site',
+			options: {
+				'software_version': 1
+			}
+		}
+		return (
+			<MainComponent>
+				<div className="plugin__page">
+					{ this.displayHeader() }
+					<PluginMeta
+						notices={ [] }
+						plugin={ this.state.plugin }
+						siteUrl={ 'no-real-url' }
+						sites={ [ selectedSite ] }
+						selectedSite={ selectedSite }
+						isMock={ true } />
+				</div>
+			</MainComponent>
+		);
+	},
+
 	render() {
 		const selectedSite = this.props.sites.getSelectedSite(),
 			classes = classNames( 'plugin__page', { 'is-wpcom': this.props.isWpcomPlugin } );
@@ -281,7 +306,8 @@ export default React.createClass( {
 						template="optInManage"
 						site={ this.props.site }
 						actionURL={ selectedSite.getRemoteManagementURL() }
-						illustration= '/calypso/images/drake/drake-jetpack.svg' />
+						illustration= '/calypso/images/drake/drake-jetpack.svg'
+						featureExample={ this.getMockPlugin() } />
 				</MainComponent>
 			);
 		}
