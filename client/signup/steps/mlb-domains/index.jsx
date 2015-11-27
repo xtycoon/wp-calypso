@@ -13,7 +13,7 @@ module.exports = React.createClass( {
 
 	getDefaultProps: function() {
 		return {
-			domain: 'mlblogs.com'
+			domain: '.mlblogs.com'
 		};
 	},
 
