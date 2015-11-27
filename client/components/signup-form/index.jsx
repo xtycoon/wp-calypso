@@ -22,7 +22,7 @@ import FormSettingExplanation from 'components/forms/form-setting-explanation'
 import FormTextInput from 'components/forms/form-text-input'
 import FormButton from 'components/forms/form-button'
 import notices from 'notices'
-import Notice from 'notices/notice'
+import Notice from 'components/notice'
 import LoggedOutForm from 'signup/logged-out-form'
 import formState from 'lib/form-state'
 
@@ -209,7 +209,7 @@ export default React.createClass( {
 		} );
 	},
 
-	globalNotice( notice ) {
+	d( notice ) {
 		return <Notice
 			className="signup-form__notice"
 			isCompact={ true }
@@ -337,10 +337,10 @@ export default React.createClass( {
 
 	getNotice() {
 		if ( this.props.step && 'invalid' === this.props.step.status ) {
-			return this.globalNotice( this.props.step.errors[ 0 ] );
+			return this.d( this.props.step.errors[ 0 ] );
 		}
 		if ( this.state.notice ) {
-			return this.globalNotice( this.state.notice );
+			return this.d( this.state.notice );
 		}
 		return false;
 	},
