@@ -9,7 +9,6 @@
 	"logout_url": "/logout",
 	"facebook_api_key": "249643311490",
 	"flickr_api_key": "2205be654575698ace17159e352e7648",
-	"discover_blog_id": 53424024,
 	"features": {
 		"desktop": true,
 		"fluid-width": true,
