@@ -57,7 +57,7 @@ export default React.createClass( {
 	wordpressIcon() {
 		// WP icon replacement for "horizon" environment
 		if ( config( 'hostname' ) === 'horizon.wordpress.com' ) {
-			return <span className="noticon noticon-horizon" />;
+			return <Gridicon icon="my-sites-horizon" />;
 		}
 
 		return <Gridicon icon="my-sites" size={ 24 } />;
