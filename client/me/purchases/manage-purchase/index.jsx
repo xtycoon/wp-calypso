@@ -18,7 +18,7 @@ import HeaderCake from 'components/header-cake';
 import Main from 'components/main';
 import NoticeArrowLink from 'notices/arrow-link';
 import PaymentLogo from 'components/payment-logo';
-import SimpleNotice from 'components/notice';
+import Notice from 'components/notice';
 import VerticalNavItem from 'components/vertical-nav/item';
 import paths from '../paths';
 import * as upgradesActions from 'lib/upgrades/actions';
@@ -88,7 +88,7 @@ const ManagePurchase = React.createClass( {
 		}
 
 		return (
-			<SimpleNotice
+			<Notice
 				className="manage-purchase__purchase-expiring-notice"
 				showDismiss={ false }
 				status={ noticeStatus }
@@ -103,7 +103,7 @@ const ManagePurchase = React.createClass( {
 				<NoticeArrowLink onClick={ this.handleRenew }>
 					{ this.translate( 'Renew Now' ) }
 				</NoticeArrowLink>
-			</SimpleNotice>
+			</Notice>
 		);
 	},
 
@@ -117,7 +117,7 @@ const ManagePurchase = React.createClass( {
 
 		if ( creditCardExpiresBeforeSubscription( purchase ) ) {
 			return (
-				<SimpleNotice
+				<Notice
 					className="manage-purchase__expiring-credit-card-notice"
 					showDismiss={ false }
 					status={ showCreditCardExpiringWarning( purchase ) ? 'is-error' : 'is-info' }>
@@ -135,7 +135,7 @@ const ManagePurchase = React.createClass( {
 							}
 						)
 					}
-				</SimpleNotice>
+				</Notice>
 			);
 		}
 	},
@@ -168,12 +168,12 @@ const ManagePurchase = React.createClass( {
 		}
 
 		return (
-			<SimpleNotice
+			<Notice
 				className="manage-purchase__path-notice"
 				showDismiss={ false }
 				status="is-success">
 				{ text }
-			</SimpleNotice>
+			</Notice>
 		);
 	},
 
@@ -374,14 +374,14 @@ const ManagePurchase = React.createClass( {
 		}
 
 		return (
-			<SimpleNotice
+			<Notice
 				showDismiss={ false }
 				status="is-error"
 				text={ this.translate( 'This purchase has expired and is no longer in use.' ) }>
 				<NoticeArrowLink onClick={ this.handleRenew }>
 					{ this.translate( 'Renew Now' ) }
 				</NoticeArrowLink>
-			</SimpleNotice>
+			</Notice>
 		);
 	},
 
