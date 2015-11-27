@@ -90,7 +90,7 @@ module.exports = React.createClass( {
 				<ExternalLink
 					key="external-link"
 					onClick={
-						analytics.ga.recordEvent.bind( this, 'Plugins', 'Clicked How do I fix disabled autoupdates' )
+						analytics.ga.recordEvent.bind( this, 'Plugins', 'Clicked How do I fix disabled plugin installs' )
 					}
 					href="https://jetpack.me/support/site-management/#file-update-disabled"
 					>
@@ -111,7 +111,27 @@ module.exports = React.createClass( {
 		if ( this.props.selectedSite.unreachable ) {
 			return (
 				<div className={ classNames( { 'plugin-install-button__install': true, embed: this.props.isEmbed } ) }>
-					<span className="plugin-install-button__warning">{ this.translate( 'Site unreachable' ) }</span>
+					<span onClick={ this.togglePopover } ref="disabledInfoLabel" className="plugin-install-button__warning">{ this.translate( 'Site unreachable' ) }</span>
+					<InfoPopover
+							position="bottom left"
+							popoverName={ 'Plugin Action Disabled Install' }
+							gaEventCategory="Plugins"
+							ref="infoPopover"
+							ignoreContext={ this.refs && this.refs.disabledInfoLabel }
+							>
+							<div>
+								<p>{ this.translate( 'We tried to get in touch with %(site)s but it was unresponsive.', { args: { site: this.props.selectedSite.title } } ) }</p>
+								<ExternalLink
+									key='external-link'
+									onClick={
+										analytics.ga.recordEvent.bind( this, 'Plugins', 'Clicked How do I fix disabled plugin installs' )
+									}
+									href={ 'http://jetpack.me/support/debug/?url=' + this.props.selectedSite.URL }
+									>
+									{ this.translate( 'How do I fix this?' ) }
+								</ExternalLink>
+							</div>
+						</InfoPopover>
 				</div>
 			);
 		}
