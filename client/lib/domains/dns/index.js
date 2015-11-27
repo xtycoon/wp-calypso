@@ -20,7 +20,7 @@ function validateField( { name, value, type } ) {
 	switch ( name ) {
 		case 'name':
 		case 'target':
-			return isValidName( value );
+			return isValidName( value, type );
 		case 'data':
 			return isValidData( value, type );
 		case 'protocol':
@@ -36,8 +36,22 @@ function validateField( { name, value, type } ) {
 	}
 }
 
-function isValidName( name ) {
-	return /^([\da-z-]+\.)+[\da-z-]+$/i.test( name );
+/*
+ * As per RFC 2181, there's actually only one restriction for DNS records - length.
+ * But realistically speaking, we should do some sane checking.
+ * For A/AAAA records we enforce a valid *hostname* as per RFC 952 and RFC 1123.
+ * For other resource records, we are more forgiving - we check the length (can be empty, max 255)
+ * and allow only certain characters that are expected in such records, but in any order.
+ */
+function isValidName( name, type ) {
+	switch ( type ) {
+		case 'A':
+		case 'AAAA':
+			return /^([a-z0-9]([a-z0-9-]*[a-z0-9])?\.)+[a-z0-9]([a-z0-9-]*[a-z0-9])?\.[a-z]{2,63}$/i.test( name );
+
+		default:
+			return /^[a-z0-9-_\.]{0,255}$/i.test( name );
+	}
 }
 
 function isValidData( data, type ) {
@@ -48,7 +62,7 @@ function isValidData( data, type ) {
 			return data.match( /^[a-f0-9\:]+$/i );
 		case 'CNAME':
 		case 'MX':
-			return isValidName( data );
+			return isValidName( data, type );
 		case 'TXT':
 			return data.length < 256;
 	}
