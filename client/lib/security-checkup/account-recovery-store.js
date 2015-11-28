@@ -18,7 +18,7 @@ var Dispatcher = require( 'dispatcher' ),
 var _initialized = false,
 	_loading = false,
 	_phone = {
-		isSavingEmail: false,
+		isSavingPhone: false,
 		lastRequestStatus: {
 			isSuccessfull: false,
 			message: ''
@@ -130,22 +130,20 @@ AccountRecoveryStore.dispatchToken = Dispatcher.register( function( payload ) {
 
 	switch ( action.type ) {
 		case actions.UPDATE_ACCOUNT_RECOVERY_PHONE:
-			updatePhone( action.phone );
+			_phone.isPhoneSaving = true;
 			emitChange();
 			break;
 
 		case actions.RECEIVE_UPDATED_ACCOUNT_RECOVERY_PHONE:
 			if ( action.error ) {
-				handlePhoneError( action.error );
+				_phone.lastRequestStatus.isSuccessfull = false;
+				_phone.lastRequestStatus.message = action.error;
+				emitChange();
 				break;
 			}
 
-			updatePhone( action.phone );
-			if ( isEmpty( action.previousPhone ) ) {
-				setPhoneNotice( messages.SMS_ADDED );
-			} else {
-				setPhoneNotice( messages.SMS_UPDATED );
-			}
+			_phone.lastRequestStatus.isSuccessfull = true;
+			_phone.lastRequestStatus.message = messages.EMAIL_ADDED;
 
 			emitChange();
 			break;
@@ -196,16 +194,6 @@ AccountRecoveryStore.dispatchToken = Dispatcher.register( function( payload ) {
 			removeEmail( action.email );
 			_emails.lastRequestStatus.isSuccessfull = true;
 			_emails.lastRequestStatus.message = messages.EMAIL_DELETED; // @TODO display email here
-			emitChange();
-			break;
-
-		case actions.DISMISS_ACCOUNT_RECOVERY_EMAIL_NOTICE:
-			resetEmailNotice();
-			emitChange();
-			break;
-
-		case actions.DISMISS_ACCOUNT_RECOVERY_PHONE_NOTICE:
-			resetPhoneNotice();
 			emitChange();
 			break;
 	}
