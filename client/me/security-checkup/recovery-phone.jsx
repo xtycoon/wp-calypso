@@ -110,7 +110,7 @@ module.exports = React.createClass( {
 		}
 
 		return (
-			<p>0775143910</p>
+			<p>{ this.state.recoveryPhone.data.numberFull }</p>
 		);
 	},
 
