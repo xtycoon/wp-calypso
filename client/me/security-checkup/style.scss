@@ -1,7 +1,6 @@
 .security-checkup__recovery-emails-placholder {
 	.form-section-heading,
-	.security-checkup__recovery-email,
-	.form-button {
+	.security-checkup__recovery-email {
 		@include placeholder();
 	}
 }

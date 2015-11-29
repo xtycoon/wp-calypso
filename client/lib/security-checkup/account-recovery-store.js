@@ -101,7 +101,7 @@ function updateEmails( emails ) {
 
 function removeEmail( deletedEmail ) {
 	_emails.data = remove( _emails.data, function( recoveryEamil ) {
-		return recoveryEamil.email !== deletedEmail;
+		return recoveryEamil !== deletedEmail;
 	} );
 
 	emitChange();

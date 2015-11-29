@@ -39,11 +39,11 @@ module.exports = React.createClass( {
 				</CompactCard>
 
 				<CompactCard>
-					<RecoveryEmails userSettings={ this.props.userSettings } />
+					<RecoveryEmails primaryEmail={ this.props.userSettings.getSetting( 'user_email' ) } />
 				</CompactCard>
 
 				<CompactCard>
-					<RecoveryPhone userSettings={ this.props.userSettings } />
+					<RecoveryPhone />
 				</CompactCard>
 			</Main>
 		);
